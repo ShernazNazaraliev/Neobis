@@ -23,13 +23,11 @@ create table Customers(
 
 create table Orders(
     orderID serial primary key,
-    customersID integer references Customers(ID),
-    carsID integer references Cars(ID),
-    nameOrder varchar(20) not null,	
+    customersID integer,
+    carsID integer,
+    nameOrder varchar(20) not null,
     createdDate date not null
 );
 
-
-
-
-
+ALTER TABLE Orders ADD CONSTRAINT fk_orders_customers FOREIGN KEY (customersID) REFERENCES Customers (ID);
+ALTER TABLE Orders ADD CONSTRAINT fk_orders_cars FOREIGN KEY (carsID) REFERENCES Cars (ID);
