@@ -1,63 +1,51 @@
-package POJO;
-
 import java.util.Date;
-import java.util.Objects;
 
 public class Orders {
-    private Long ID;
-    private String nameOrder;
-    private Long customersID;
-    private Long carsID;
-    private Date createdDate;
+    private long OrdersID;
+    private long CarsID;
+    private long CustomersId;
+    private Date date;
 
     public Orders() {
     }
 
-    public Orders(Long ID, String nameOrder, Long customersID, Long carsID, Date createdDate) {
-        this.ID = ID;
-        this.nameOrder = nameOrder;
-        this.customersID = customersID;
-        this.carsID = carsID;
-        this.createdDate = createdDate;
+    public Orders(long ordersID, long carsID, long customersId, Date date) {
+        OrdersID = ordersID;
+        CarsID = carsID;
+        CustomersId = customersId;
+        this.date = date;
     }
 
-    public void setID(Long ID) {
-        this.ID = ID;
+    public long getOrdersID() {
+        return OrdersID;
     }
 
-    public void setNameOrder(String nameOrder) {
-        this.nameOrder = nameOrder;
+    public void setOrdersID(long ordersID) {
+        OrdersID = ordersID;
     }
 
-    public void setCustomersID(Long customersID) {
-        this.customersID = customersID;
+    public long getCarsID() {
+        return CarsID;
     }
 
-    public void setCarsID(Long carsID) {
-        this.carsID = carsID;
+    public void setCarsID(long carsID) {
+        CarsID = carsID;
     }
 
-    public void setCreatedDate(Date createdDate) {
-        this.createdDate = createdDate;
+    public long getCustomersId() {
+        return CustomersId;
     }
 
-    public Long getID() {
-        return ID;
+    public void setCustomersId(long customersId) {
+        CustomersId = customersId;
     }
 
-    public String getNameOrder() {
-        return nameOrder;
+    public Date getDate() {
+        return date;
     }
 
-    public Long getCustomersID() {
-        return customersID;
-    }
-
-    public Long getCarsID() {
-        return carsID;
-    }
-
-    public Date getCreatedDate() {
-        return createdDate;
+    public void setDate(Date date) {
+        this.date = date;
     }
 }
+
