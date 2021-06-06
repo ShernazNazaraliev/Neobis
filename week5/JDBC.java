@@ -11,22 +11,26 @@ public class JDBC {
     private static int rows;
 
     public static void main(String[] args) throws SQLException {
-        AddCars("BMB", "Black", 3.5, 50000.00);
-        AddCars("Mercedes", "Blue", 5.5, 100000.00);
-        AddCars("Mazda", "Green", 2.5, 15000.00);
+        try {
+            AddCars("BMB", "Black", 3.5, 50000.00);
+            AddCars("Mercedes", "Blue", 5.5, 100000.00);
+            AddCars("Mazda", "Green", 2.5, 15000.00);
 
-        selectCars();
+            selectCars();
 
-        updateСars(2,"Tayota");
+            updateСars(2, "Tayota");
 
-        selectCars();
+            selectCars();
 
-        deleteCars(1);
-        deleteCars(2);
+            deleteCars(1);
+            deleteCars(2);
 
-        selectCars();
+            selectCars();
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
     }
-
     private static void connectiondb(){
         try {
             Class.forName("com.mysql.jdbc.Driver");
