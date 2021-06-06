@@ -1,6 +1,6 @@
 create database AutoShop;
 
-\c AutoShop;
+use AutoShop;
 
 create table Cars(
     CarID int unsigned primary key auto_increment,
@@ -29,5 +29,3 @@ create table Orders(
     foreign key (CustomersId) references Customers (CustomersId),
     foreign key (CarID) references Cars(CarID)
 );
-
-
