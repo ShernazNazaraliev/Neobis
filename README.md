@@ -1,4 +1,4 @@
-name repository: first_project
+name repository: Neobis
 
 date of creation: 04.05.2021
 
