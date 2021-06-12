@@ -1,6 +1,10 @@
 import javax.swing.*;
+
+import com.google.protobuf.Message;
 import com.mysql.cj.jdbc.Driver;
 import java.sql.*;
+import java.text.MessageFormat;
+import java.util.logging.LoggingPermission;
 
 public class JDBC {
     private  static Connection connection = null;
@@ -56,19 +60,17 @@ public class JDBC {
         }
         finally {
             try {
-                if (statement!=null){
-                    connection.close();
+                if (statement != null) {
+                    statement.close();
                 }
-            }
-            catch (SQLException e){
+            } catch (SQLException e) {
                 e.printStackTrace();
             }
-            try{
-                if(connection!=null){
+            try {
+                if (connection != null) {
                     connection.close();
                 }
-            }
-            catch (SQLException e){
+            } catch (SQLException e) {
                 e.printStackTrace();
             }
         }
@@ -93,7 +95,7 @@ public class JDBC {
         finally {
             try {
                 if (statement!=null){
-                    connection.close();
+                    statement.close();
                 }
             }
             catch (SQLException e){
@@ -123,7 +125,7 @@ public class JDBC {
         }finally {
             try {
                 if (statement != null) {
-                    connection.close();
+                    statement.close();
                 }
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -150,7 +152,7 @@ public class JDBC {
         }finally {
             try {
                 if (statement != null) {
-                    connection.close();
+                    statement.close();
                 }
             } catch (SQLException e) {
                 e.printStackTrace();
