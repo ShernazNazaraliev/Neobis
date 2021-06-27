@@ -1,0 +1,82 @@
+1. Add Customer
+2. POST localhost:8080/customers/add
+3.   "customersName": "First",
+     "email": "first@gmail.com",
+     "adress": "Bishkek",
+     "phoneNumber": "0700700700"
+4. 200(OK)
+
+--------------------------------------
+1. Get all of customers
+2. GET localhost:8080/customers/all
+3. 
+[
+    {
+        "customerID": 1,
+        "customersName": "First",
+        "email": "first@gmail.com",
+        "adress": "Bishkek",
+        "phoneNumber": "0700700700"
+    },
+    {
+        "customerID": 2,
+        "customersName": "Second",
+        "email": "second@gmail.com",
+        "adress": "Talas",
+        "phoneNumber": "0700700700"
+    },
+    {
+        "customerID": 3,
+        "customersName": "Third",
+        "email": "third@gmail.com",
+        "adress": "Naryn",
+        "phoneNumber": "0700700700"
+    },
+    {
+        "customerID": 4,
+        "customersName": "Fourth",
+        "email": "fourth@gmail.com",
+        "adress": "Issyk-Kul",
+        "phoneNumber": "0700700700"
+    }
+]
+4 (200 OK)
+---------------------------------------
+1. Get just one customer
+2. GET localhost:8080/customers/search/1
+3. 
+{
+    "customerID": 1,
+    "customersName": "First",
+    "email": "first@gmail.com",
+    "adress": "Bishkek",
+    "phoneNumber": "0700700700"
+}
+4. (200 OK)
+---------------------------------------
+1. Update customer
+2. PUT localhost:8080/customers/update
+3. 
+{
+    "customerID": 4,
+    "customersName": "Kiril",
+    "email": "kiril@gmail.com",
+    "adress": "Moscow",
+    "phoneNumber": "+9935293592325"
+}
+4.
+{
+    "customerID": 4,
+    "customersName": "Kiril",
+    "email": "kiril@gmail.com",
+    "adress": "Moscow",
+    "phoneNumber": "+9935293592325"
+}
+5. (200 OK)
+---------------------------------------
+1. Deletet customer
+2. DELETE localhost:8080/customers/delete/{id=4}
+3. deleted!
+4 1 (200 OK)
+
+
