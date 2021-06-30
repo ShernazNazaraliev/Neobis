@@ -19,7 +19,7 @@ public class Order {
     @SequenceGenerator(name = "Order_seq", sequenceName = "Order_seq", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "Order_seq")
     @Column (name = "order_ID")
-    private Long orderId;
+    private Long orderID;
 
     @ManyToOne
     @JoinColumn(name = "customer_ID", referencedColumnName = "customer_ID")

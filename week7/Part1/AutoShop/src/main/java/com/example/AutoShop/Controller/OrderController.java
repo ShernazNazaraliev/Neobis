@@ -38,8 +38,8 @@ public class OrderController {
     }
 
     @GetMapping("/customer/{customerID}/orders")
-    public List<Order> getAllByCustomerID(@PathVariable (value = "customerID") Long customerId){
-        return orderRepository.findAllByCustomerID(customerId);
+    public List<Order> getAllByCustomerID(@PathVariable (value = "customerID") Long customerID){
+        return orderRepository.findAllByCustomerID(customerID);
     }
 
     @GetMapping("/customer/{customerID}/orders/{orderID}")
