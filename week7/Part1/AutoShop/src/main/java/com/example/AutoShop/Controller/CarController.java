@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping ("/car")
+@RequestMapping ("/Car")
 public class CarController {
     private final CarRepository carRepository;
 
@@ -42,7 +42,7 @@ public class CarController {
         return carRepository.save(carUpdate);
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/deleteCar/{id}")
     public String carDelete(@PathVariable Long id){
         carRepository.deleteById(id);
         return "deleted!";

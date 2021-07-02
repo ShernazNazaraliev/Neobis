@@ -19,7 +19,7 @@ public class Car {
 
     private String carName;
 
-    private String color;
+        private String color;
 
     @ManyToOne
     @JoinColumn (name = "car_Type_ID", referencedColumnName = "car_Type_ID")
