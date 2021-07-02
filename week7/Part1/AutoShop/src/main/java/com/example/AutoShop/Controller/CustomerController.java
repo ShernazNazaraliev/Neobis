@@ -1,8 +1,10 @@
 package com.example.AutoShop.Controller;
 
 import com.example.AutoShop.Entity.Customer;
+import com.example.AutoShop.Exceptions.ResourceNotFound;
 import com.example.AutoShop.Repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -11,8 +13,13 @@ import java.util.List;
 @RequestMapping("/customer")
 public class CustomerController {
 
+    private final CustomerRepository customerRepository;
+
     @Autowired
-    private CustomerRepository customerRepository;
+    public CustomerController(CustomerRepository customerRepository) {
+        this.customerRepository = customerRepository;
+    }
+
 
     @GetMapping("/all")
     public List<Customer> get(){
@@ -20,18 +27,24 @@ public class CustomerController {
     }
 
     @GetMapping("/search/{id}")
-    public Customer getById(@PathVariable Long id) throws Exception {
-        return customerRepository.findById(id).orElse(null);
+    public Customer getById(@PathVariable Long id) {
+        return customerRepository.findById(id).orElseThrow(()-> new ResourceNotFound("customer with this go not found ",id));
     }
 
     @PostMapping("/add")
-    public Customer addCustomers(@RequestBody Customer customer){
-        return customerRepository.save(customer);
+    public ResponseEntity<?> addCustomers(@RequestBody Customer customer){
+        try {
+            customerRepository.save(customer);
+            return ResponseEntity.ok(customer);
+        }
+        catch (Exception e){
+            return ResponseEntity.badRequest().body("the object has not survived");
+        }
     }
 
     @PutMapping("/update")
     public Customer updateCustomers(@RequestBody Customer customer){
-        Customer customerUpdate = customerRepository.findById(customer.getCustomerID()).orElse(null);
+        Customer customerUpdate = customerRepository.findById(customer.getCustomerID()).orElseThrow(()->new ResourceNotFound("customer with this go not found ",customer.getCustomerID()));
         customerUpdate.setCustomersName(customer.getCustomersName());
         customerUpdate.setEmail(customer.getEmail());
         customerUpdate.setAdress(customer.getAdress());
@@ -40,9 +53,14 @@ public class CustomerController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public String deleteCustomers(@PathVariable Long id){
-        customerRepository.deleteById(id);
-        return "deleted!";
+    public ResponseEntity<?> deleteCustomers(@PathVariable Long id){
+        try {
+            customerRepository.deleteById(id);
+            return ResponseEntity.ok("deleted!");
+        }
+        catch (Exception e){
+            return ResponseEntity.badRequest().body("user with this id not found id = " + id);
+        }
     }
 
 }

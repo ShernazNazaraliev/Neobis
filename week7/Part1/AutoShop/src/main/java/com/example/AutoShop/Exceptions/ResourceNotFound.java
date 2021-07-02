@@ -5,7 +5,7 @@ public class ResourceNotFound extends RuntimeException {
     public ResourceNotFound() {
     }
 
-    public ResourceNotFound(String str , Long id){
+    public ResourceNotFound(String str, Long id){
         super(str + id);
     }
 

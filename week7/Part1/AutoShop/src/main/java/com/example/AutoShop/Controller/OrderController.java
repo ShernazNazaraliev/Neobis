@@ -34,7 +34,7 @@ public class OrderController {
         return customerRepository.findById(customerID).map(customer -> {
             order.setCustomerID(customer);
             return orderRepository.save(order);
-        }).orElseThrow(()-> new ResourceNotFound("Could not find",customerID));
+        }).orElseThrow(()-> new ResourceNotFound("customer with this go not found ",customerID));
     }
 
     @GetMapping("/customer/{customerID}/orders")
@@ -46,10 +46,10 @@ public class OrderController {
     public Order findById(@PathVariable (value = "customerID")Long customerID,
                           @PathVariable (value = "orderID") Long orderID){
         if (!customerRepository.existsById(customerID)){
-            throw new ResourceNotFound("Could not find",customerID);
+            throw new ResourceNotFound("customer with this go not found ", customerID);
         }
         return orderRepository.findById(orderID)
-                .orElseThrow(()-> new ResourceNotFound("Could not find",orderID));
+                .orElseThrow(()-> new ResourceNotFound("order with this go not found ", orderID));
     }
 
     @PutMapping("/customer/{customerID}/order/{orderID}/update")
@@ -57,19 +57,24 @@ public class OrderController {
                              @PathVariable (value = "orderID") Long orderID,
                              @RequestBody Order order){
         if (customerRepository.existsById(customerID)){
-            throw new ResourceNotFound("Could not find",customerID);
+            throw new ResourceNotFound("customer with this go not found ", customerID);
         }
         return orderRepository.findById(orderID).map(order1 -> {
             return orderRepository.save(order);
-        }).orElseThrow(()->new ResourceNotFound("Could not find",orderID));
+        }).orElseThrow(()->new ResourceNotFound("order with this go not found ", orderID));
     }
 
-    @DeleteMapping("/customer/{customerID}/orders/{orderID}/delete")
+    @DeleteMapping("/customer/{customerID}/orders/{orderID}")
     public ResponseEntity<?> orderDelete (@PathVariable (value = "customerID")Long customerID,
                                           @PathVariable (value = "orderID") Long orderID){
         return orderRepository.findByCustomerIDAndOrderID(orderID,customerID).map(order -> {
-            orderRepository.delete(order);
-            return ResponseEntity.ok().build();
-        }).orElseThrow(()->new ResourceNotFound("Could not find",orderID));
+            try {
+                orderRepository.delete(order);
+                return ResponseEntity.ok("deleted!");
+            }
+            catch (Exception e){
+                return ResponseEntity.badRequest().body("order with this id not found id = " + orderID);
+            }
+        }).orElseThrow(()->new ResourceNotFound("order with this go not found ", orderID));
     }
 }

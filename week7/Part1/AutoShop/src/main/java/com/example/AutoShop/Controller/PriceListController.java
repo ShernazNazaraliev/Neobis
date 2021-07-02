@@ -28,27 +28,35 @@ public class PriceListController {
     }
 
     @PostMapping("/add")
-    public PriceList add(@RequestBody PriceList priceList){
-        return priceListRepository.save(priceList);
+    public ResponseEntity<?> add(@RequestBody PriceList priceList) {
+        try {
+            priceListRepository.save(priceList);
+            return  ResponseEntity.ok(priceList);
+        }
+        catch (Exception e){
+            return ResponseEntity.badRequest().body("failed to save");
+        }
     }
-
     @GetMapping("/search/{id}")
     public PriceList findById(@PathVariable Long id){
-        return priceListRepository.findById(id).orElseThrow(()->new ResourceNotFound("Could not find",id));
+        return priceListRepository.findById(id).orElseThrow(()->new ResourceNotFound("PriceList with this id is not on ",id));
     }
 
     @PutMapping("/update")
     public PriceList priceListUpdate(@RequestBody PriceList priceList){
-        return priceListRepository.findById(priceList.getPriceID()).map(priceList1 -> {
-            return priceListRepository.save(priceList);
-        }).orElseThrow(()-> new ResourceNotFound("Could not find",priceList.getPriceID()));
+        PriceList priceListUpdate = priceListRepository.findById(priceList.getPriceID()).orElseThrow(()->new ResourceNotFound("PriceList with this id is not on ",priceList.getPriceID()));
+        priceListUpdate.setPrice(priceList.getPrice());
+        return priceListRepository.save(priceListUpdate);
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<String> pricelistDelete(@PathVariable Long id){
-        return priceListRepository.findById(id).map(priceList -> {
+    public ResponseEntity<?> pricelistDelete(@PathVariable Long id){
+        try {
             priceListRepository.deleteById(id);
-            return new ResponseEntity<>("Deleted!", HttpStatus.OK);
-        }).orElseThrow(()-> new ResourceNotFound("Could not find", id));
+            return ResponseEntity.ok("deleted!");
+        }
+        catch (Exception e){
+            return ResponseEntity.badRequest().body("price with this id not found id = " + id);
+        }
     }
 }
