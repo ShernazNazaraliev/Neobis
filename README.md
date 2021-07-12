@@ -13,7 +13,7 @@ author: Nazaraliev Shernaz
 <h1> Заголовок 1 </h1>
 <h3> Заголовок 2 </h3>
 
-![2-600x600](https://user-images.githubusercontent.com/79134498/116970134-1622a680-acc0-11eb-96fc-31381cc233b7.jpg)
+https://scontent.ffru1-2.fna.fbcdn.net/v/t1.6435-9/118285230_252891225946178_8964627905206059329_n.png?_nc_cat=101&ccb=1-3&_nc_sid=973b4a&_nc_ohc=uxqo9DG6LPsAX_oPNAa&_nc_ht=scontent.ffru1-2.fna&oh=e3f8fd3ad6dcffcc07f0cf56682c9012&oe=60F01EF3
 
 ```
 void add(Int& A, Int& B) {
