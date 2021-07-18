@@ -1,4 +1,4 @@
-package com.example.AutoShop.Controller;
+package com.example.AutoShop.controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -8,6 +8,6 @@ public class MainController {
 
     @GetMapping("/login")
     public String login(){
-         return "login";
+        return "login";
     }
 }

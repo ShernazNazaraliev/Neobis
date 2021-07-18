@@ -34,6 +34,7 @@ public class RegistrationController {
     @PostMapping
     public String registerUser (@ModelAttribute ("userForm")UserRegistration userRegistration){
         userService.save(userRegistration);
-        return "redirect:/registration?success";
+            return "redirect:/registration?success";
     }
+
 }
