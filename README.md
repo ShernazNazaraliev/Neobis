@@ -13,7 +13,7 @@ author: Nazaraliev Shernaz
 <h1> Заголовок 1 </h1>
 <h3> Заголовок 2 </h3>
 
-![2-600x600](https://user-images.githubusercontent.com/79134498/116970134-1622a680-acc0-11eb-96fc-31381cc233b7.jpg)
+![Neobis](https://user-images.githubusercontent.com/79134498/125259161-bd970780-e307-11eb-8058-e991b53143f7.png)
 
 ```
 void add(Int& A, Int& B) {
