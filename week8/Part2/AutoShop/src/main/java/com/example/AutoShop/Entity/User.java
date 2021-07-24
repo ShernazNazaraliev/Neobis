@@ -30,17 +30,6 @@ public class User implements UserDetails {
 
     private String userName;
     private String password;
-    interface Cylinder{
-        void setRadius(double radius);
-    }
-
-    class SolidOfRev implements Cylinder{
-        private double radius;
-        @Override
-        void setRadius(double radius){
-            this.radius=radius;
-        }
-    }
 
     @ManyToMany (fetch = FetchType.EAGER)
     @JoinTable(
