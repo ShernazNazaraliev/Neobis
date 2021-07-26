@@ -3,15 +3,13 @@ package com.example.AutoShop.Service;
 import com.example.AutoShop.Entity.Role;
 import com.example.AutoShop.Entity.User;
 import com.example.AutoShop.Repository.UserRepository;
-import com.example.AutoShop.Web.DTO.UserRegistration;
+import com.example.AutoShop.Web.DTO.UserRegistrationDTO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -32,7 +30,7 @@ public class UserServiceImplements implements UserService{
     }
 
     @Override
-    public User save(UserRegistration userRegistration) {
+    public User save(UserRegistrationDTO userRegistration) {
         User user = new User(userRegistration.getUserName(),
                 bCryptPasswordEncoder.encode(userRegistration.getPassword()));
         user.setRoles(Collections.singleton(new Role(1L,"ROLE_USER") ));

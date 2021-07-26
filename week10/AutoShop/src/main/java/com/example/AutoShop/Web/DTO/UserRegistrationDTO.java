@@ -1,13 +1,13 @@
 package com.example.AutoShop.Web.DTO;
 
-public class UserRegistration {
+public class UserRegistrationDTO {
     private String userName;
     private String password;
 
-    public UserRegistration() {
+    public UserRegistrationDTO() {
     }
 
-    public UserRegistration(String userName, String password) {
+    public UserRegistrationDTO(String userName, String password) {
         this.userName = userName;
         this.password = password;
     }

@@ -2,7 +2,7 @@ package com.example.AutoShop.Controller;
 
 
 import com.example.AutoShop.Service.UserService;
-import com.example.AutoShop.Web.DTO.UserRegistration;
+import com.example.AutoShop.Web.DTO.UserRegistrationDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,8 +22,8 @@ public class RegistrationController {
     }
 
     @ModelAttribute("userForm")
-    public UserRegistration userRegistration(){
-        return new UserRegistration();
+    public UserRegistrationDTO userRegistration(){
+        return new UserRegistrationDTO();
     }
 
     @GetMapping
@@ -32,7 +32,7 @@ public class RegistrationController {
     }
 
     @PostMapping
-    public String registerUser (@ModelAttribute ("userForm")UserRegistration userRegistration){
+    public String registerUser (@ModelAttribute ("userForm") UserRegistrationDTO userRegistration){
         userService.save(userRegistration);
             return "redirect:/registration?success";
     }

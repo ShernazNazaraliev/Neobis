@@ -10,4 +10,5 @@ public class AdminController {
     public String admin(){
         return "<h2>Welcome ADMIN!</h2>";
     }
+
 }
