@@ -1,0 +1,3 @@
+docker run --name mysql-autoshop -e MYSQL_ROOT_PASSWORD=password -e MYSQL_DATABASE=autoshop -e MYSQL_ROOT_PASSWORD=password -e MYSQL_PASSWORD=password -d mysql:8.0
+
+docker run -d -p 9090:9090 --name autoshop --link mysql-autoshop autoshop 

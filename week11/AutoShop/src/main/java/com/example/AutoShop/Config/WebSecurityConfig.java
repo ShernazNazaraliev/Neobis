@@ -48,7 +48,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 
     @Configuration
-    @Order(1)
+    @Order(2)
     public class ApiSecurityAdapter extends WebSecurityConfigurerAdapter {
 
         private final JWTFilter jwtFilter;
@@ -57,8 +57,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         public ApiSecurityAdapter(JWTFilter jwtFilter) {
             this.jwtFilter = jwtFilter;
         }
-
-
+        @Bean(name = BeanIds.AUTHENTICATION_MANAGER)
+        @Override
+        public AuthenticationManager authenticationManagerBean() throws Exception {
+            return super.authenticationManagerBean();
+        }
         @Override
         protected void configure(HttpSecurity http) throws Exception {
             http
@@ -76,7 +79,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Configuration
-    @Order(2)
+    @Order(1)
     public class WebSecurityAdapter extends WebSecurityConfigurerAdapter {
         @Override
         protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -84,11 +87,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             auth.userDetailsService(userServiceImplements);
         }
 
-        @Bean(name = BeanIds.AUTHENTICATION_MANAGER)
-        @Override
-        public AuthenticationManager authenticationManagerBean() throws Exception {
-            return super.authenticationManagerBean();
-        }
+
 
         @Override
         protected void configure(HttpSecurity http) throws Exception {
