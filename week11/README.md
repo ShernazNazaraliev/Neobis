@@ -15,3 +15,7 @@
 5. run container
 	```docker run -d -p 9090:9090 --name autoshop --link mysql-autoshop autoshop ```
 
+
+<h2>docker-compose</h2>
+1. run docker-compose
+	```docker-compose -f docker-compose.yml up```
