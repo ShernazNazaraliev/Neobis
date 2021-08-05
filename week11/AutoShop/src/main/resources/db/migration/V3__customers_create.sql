@@ -1,4 +1,4 @@
-create table if not exists customers
+create table customers
 (
     customer_id bigint not null
     primary key,
@@ -10,7 +10,9 @@ create table if not exists customers
 
 
 
-create table if not exists customer_seq
+create table customers_seq
 (
     next_val bigint null
 );
+
+insert into customers_seq values ( 1 );

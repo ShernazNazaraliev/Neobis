@@ -11,13 +11,13 @@ import javax.persistence.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity (name = "PriceList")
-@Table (name = "PriceList")
+@Entity (name = "priceList")
+@Table (name = "price_list")
 public class PriceList {
 
     @Id
-    @SequenceGenerator(name = "PriceList_seq",sequenceName = "PriceList_seq", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "PriceList_seq")
+    @SequenceGenerator(name = "price_list_seq",sequenceName = "price_list_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "price_list_seq")
     @Column(name = "price_ID")
     private Long priceID;
 

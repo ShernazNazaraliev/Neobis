@@ -1,14 +1,13 @@
-create table if not exists car_type
+create table  car_type
 (
     car_type_id bigint       not null
     primary key,
     car_type    varchar(255) null
     );
 
-
-
-create table if not exists car_type_seq
+create table car_type_seq
 (
     next_val bigint not null
 );
 
+insert into car_type_seq values ( 1 );

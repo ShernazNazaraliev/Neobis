@@ -19,13 +19,13 @@
 @Getter
 @Setter
 @Entity
-@Table (name = "User")
+@Table (name = "users")
 public class User implements UserDetails {
     @Id
-    @SequenceGenerator(name = "User_seq",
-            sequenceName = "User_seq",
-            allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "User_seq")
+    @SequenceGenerator(name = "users_seq",
+            sequenceName = "users_seq",
+            allocationSize = 2)
+    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "users_seq")
     @Column (name = "user_ID")
     private Long id;
 

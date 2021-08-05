@@ -1,4 +1,4 @@
-create table if not exists orders
+create table orders
 (
     order_id bigint not null
             primary key,
@@ -6,8 +6,10 @@ create table if not exists orders
     customer_id bigint null
 );
 
-create table if not exists order_seq
+create table orders_seq
 (
     next_val bigint null
 );
+
+insert into orders_seq values ( 1 );
 

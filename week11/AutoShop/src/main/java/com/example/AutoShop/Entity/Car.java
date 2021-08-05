@@ -8,21 +8,21 @@ import javax.persistence.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity (name = "Car")
-@Table (name = "Cars")
+@Entity (name = "cars")
+@Table (name = "cars")
 public class Car {
     @Id
-    @SequenceGenerator(name = "Customer_seq", sequenceName = "Customer_seq",allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "Customer_seq")
+    @SequenceGenerator(name = "cars_seq", sequenceName = "cars_seq",allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "cars_seq")
     @Column (name = "car_Id")
     private Long CarId;
 
     private String carName;
 
-        private String color;
+    private String color;
 
     @ManyToOne
-    @JoinColumn (name = "car_Type_ID", referencedColumnName = "car_Type_ID")
+    @JoinColumn (name = "car_type_ID", referencedColumnName = "car_type_ID")
     private CarType carType;
 
     @ManyToOne

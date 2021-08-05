@@ -11,13 +11,13 @@ import javax.persistence.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity (name = "Orders")
-@Table (name = "Orders")
+@Entity (name = "orders")
+@Table (name = "orders")
 public class Order {
 
     @Id
-    @SequenceGenerator(name = "Order_seq", sequenceName = "Order_seq", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "Order_seq")
+    @SequenceGenerator(name = "orders_seq", sequenceName = "orders_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "orders_seq")
     @Column (name = "order_ID")
     private Long orderID;
 
