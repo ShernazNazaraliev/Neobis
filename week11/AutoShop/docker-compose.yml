@@ -1,23 +1,25 @@
 version: '3.7'
 services:
   mysql-autoshop:
-    image: 'mysql:8.0'
+    container_name: mysql-autoshop
+    image: mysql
     environment:
-      - MYSQL_ROOT_PASSWORD=password
-      - MYSQL_PASSWORD=password
-      - MYSQL_DATABASES=autoshop
-    ports:
-    - "3307:3306"
+      MYSQL_DATABASE: autoshop
+      MYSQL_PASSWORD: password
+      MYSQL_ROOT_PASSWORD: password
   autoshop:
+    container_name: autoshop
     image: autoshop
     ports:
-      - "9090:9091"
+      - 9090:9090
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-autoshop:3306/autoshop?autoReconnect=true&failOverReadOnly=false&maxReconnects=10
-      SPRING_DATASOURCE_USERNAME: "root"
-      SPRING_DATASOURCE_PASSOWRD: "password"
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-autoshop/autoshop?autoReconnect=true&failOverReadOnly=false&maxReconnects=10
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSOWRD: password
+      SPRING_DATASOURCE_DRIVER_CLASS_NAME: com.mysql.cj.jdbc.Driver
+
     build:
-      context: "./"
-      dockerfile: "Dockerfile"
+      context: ./
+      dockerfile: Dockerfile
     depends_on:
       - mysql-autoshop

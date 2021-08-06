@@ -18,4 +18,4 @@
 
 <h2>docker-compose</h2>
 1. run docker-compose
-	```docker-compose -f docker-compose.yml up```
+	```docker-compose -f docker-compose.yml up ```
