@@ -1,5 +1,5 @@
 1. Add Customer
-2. POST localhost:8080/customers/add
+2. POST localhost:9090/customer
 3.   "customersName": "First",
      "email": "first@gmail.com",
      "adress": "Bishkek",
@@ -7,8 +7,8 @@
 4. 200(OK)
 
 --------------------------------------
-1. Get all of customers
-2. GET localhost:8080/customers/all
+1. Get all of customerы
+2. GET localhost:9090/customer
 3. 
 [
     {
@@ -17,33 +17,12 @@
         "email": "first@gmail.com",
         "adress": "Bishkek",
         "phoneNumber": "0700700700"
-    },
-    {
-        "customerID": 2,
-        "customersName": "Second",
-        "email": "second@gmail.com",
-        "adress": "Talas",
-        "phoneNumber": "0700700700"
-    },
-    {
-        "customerID": 3,
-        "customersName": "Third",
-        "email": "third@gmail.com",
-        "adress": "Naryn",
-        "phoneNumber": "0700700700"
-    },
-    {
-        "customerID": 4,
-        "customersName": "Fourth",
-        "email": "fourth@gmail.com",
-        "adress": "Issyk-Kul",
-        "phoneNumber": "0700700700"
     }
 ]
 4 (200 OK)
 ---------------------------------------
 1. Get just one customer
-2. GET localhost:8080/customers/search/1
+2. GET localhost:9090/customer/1
 3. 
 {
     "customerID": 1,
@@ -55,26 +34,25 @@
 4. (200 OK)
 ---------------------------------------
 1. Update customer
-2. PUT localhost:8080/customers/update
+2. PUT localhost:9090/customer/1
 3. 
 {
-    "customerID": 4,
-    "customersName": "Kiril",
-    "email": "kiril@gmail.com",
-    "adress": "Moscow",
-    "phoneNumber": "+9935293592325"
+    "customerID": 2,
+    "customersName": "Second",
+    "email": "Second@gmail.com",
+    "adress": "Talas",
+    "phoneNumber": "0700700700"
 }
 4.
 {
-    "customerID": 4,
-    "customersName": "Kiril",
-    "email": "kiril@gmail.com",
-    "adress": "Moscow",
-    "phoneNumber": "+9935293592325"
+    "customerID": 2,
+    "customersName": "Second",
+    "email": "Second@gmail.com",
+    "adress": "Talas",
+    "phoneNumber": "0700700700"
 }
 5. (200 OK)
 ---------------------------------------
 1. Deletet customer
-2. DELETE localhost:8080/customers/delete/{id=4}
-3. deleted!
-4 1 (200 OK)
+2. DELETE localhost:9090/customer/1
+3. 1 (200 OK)
