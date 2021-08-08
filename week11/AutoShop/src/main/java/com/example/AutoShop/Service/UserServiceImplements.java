@@ -1,10 +1,11 @@
 package com.example.AutoShop.Service;
 
+import com.example.AutoShop.DTO.UserDTO;
 import com.example.AutoShop.Entity.Role;
 import com.example.AutoShop.Entity.User;
 import com.example.AutoShop.Repository.UserRepository;
-import com.example.AutoShop.Web.DTO.UserRegistrationDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -24,31 +25,30 @@ public class UserServiceImplements implements UserService{
 
     private UserRepository userRepository;
 
-    public UserServiceImplements(UserRepository userRepository) {
+
+    public UserServiceImplements(UserRepository userRepository){
         super();
-        this.userRepository = userRepository;
+        this.userRepository=userRepository;
     }
 
+
     @Override
-    public User save(UserRegistrationDTO userRegistration) {
-        User user = new User(userRegistration.getUserName(),
-                bCryptPasswordEncoder.encode(userRegistration.getPassword()));
-        user.setRoles(Collections.singleton(new Role(1L,"ROLE_USER") ));
+    public User save(UserDTO userDTO) {
+        User user = new User(userDTO.getUserName(),bCryptPasswordEncoder.encode(userDTO.getPassword()));
+        user.setRoles(Collections.singleton(new Role(1L, "ROLE_USER")));
         return userRepository.save(user);
     }
 
     @Override
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
         User user = userRepository.findByUserName(userName);
-
-        if (user == null) {
-            throw new UsernameNotFoundException("Invalid username or password!");
+        if (user==null){
+            throw new UsernameNotFoundException("Invalid login or password!");
         }
-
-        return new org.springframework.security.core.userdetails.User(user.getUsername(),user.getPassword(),user.getRoles());
+        return new org.springframework.security.core.userdetails.User(user.getUsername(),user.getPassword(), user.getRoles());
     }
 
     private Collection <? extends GrantedAuthority> mapRolesToAuthorities (Collection<Role> roles){
-        return roles.stream().map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
+        return roles.stream().map(role -> new SimpleGrantedAuthority(role.getAuthority())).collect(Collectors.toList());
     }
 }
