@@ -9,34 +9,35 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping ("/cars")
+@RequestMapping("/cars")
 public class CarController {
+
     @Autowired
     private CarService carService;
 
     @GetMapping
-    public List<Car> getAll(){
-        return carService.getAll();
-    }
-
-    @GetMapping ("/{id}")
-    public Car getById (@PathVariable Long id){
-        return carService.getById(id);
+    public List<Car> findAll(){
+        return carService.getAllCar();
     }
 
     @PostMapping
-    public Car add (@RequestBody Car car){
-        return carService.add(car);
+    public ResponseEntity<String> add(@RequestBody Car car){
+        return carService.addCar(car);
     }
 
-    @PutMapping ("/{id}")
-    public Car update (@RequestBody Car carUpdate, @PathVariable Long id){
-        return carService.update(carUpdate,id);
+    @GetMapping("/{id}")
+    public ResponseEntity<?> findById(@PathVariable Long id) {
+        return carService.findById(id);
     }
 
-    @DeleteMapping ("{id}")
-    public void delete (@PathVariable Long id){
-        carService.delete(id);
+    @PutMapping("/{id}")
+    public ResponseEntity<?> update(@PathVariable Long id,
+                                    @RequestBody Car car){
+        return carService.updateCar(id, car);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> delete(@PathVariable Long id){
+        return carService.deleteCar(id);
     }
 }
-

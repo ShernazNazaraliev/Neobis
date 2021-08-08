@@ -1,6 +1,6 @@
 package com.example.AutoShop.Controller;
 
-import com.example.AutoShop.Entity.AuthRequest;
+import com.example.AutoShop.Entity.AuthorizationJwtUser;
 import com.example.AutoShop.Security.JWT.JWTUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -9,7 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
-public class MainController {
+public class UserController {
 
     @Autowired
     private JWTUtil jwtUtil;
@@ -17,21 +17,27 @@ public class MainController {
     @Autowired
     private AuthenticationManager authenticationManager;
 
+    @GetMapping("/admin")
+    public String helloAdmin(){
+        return "<h1>Hello Admin!</h1>";
+    }
+
     @GetMapping("/login")
     public String login(){
-        return "login.html";
+        return "login";
     }
 
     @PostMapping("/auth")
     @ResponseBody
-    public String generateToken(@RequestBody AuthRequest authRequest) throws Exception {
+    public String generateToken(@RequestBody AuthorizationJwtUser authorizationJwtUser) throws Exception {
         try {
             authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(authRequest.getUserName(), authRequest.getPassword())
+                    new UsernamePasswordAuthenticationToken(authorizationJwtUser.getUserName(), authorizationJwtUser.getPassword())
             );
         } catch (Exception ex) {
             throw new Exception("invalid username/password");
         }
-        return jwtUtil.generateToken(authRequest.getUserName());
+        return jwtUtil.generateToken(authorizationJwtUser.getUserName());
     }
+
 }

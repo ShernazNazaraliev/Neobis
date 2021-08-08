@@ -1,17 +1,17 @@
 package com.example.AutoShop.Service;
 
-import com.example.AutoShop.Entity.Car;
 import com.example.AutoShop.Entity.CarType;
-import com.example.AutoShop.Exceptions.ResourceNotFound;
 import com.example.AutoShop.Repository.CarTypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CarTypeService {
-
 
     private final CarTypeRepository carTypeRepository;
 
@@ -20,30 +20,45 @@ public class CarTypeService {
         this.carTypeRepository = carTypeRepository;
     }
 
-
-    public List<CarType> getAll (){
+    public List<CarType> getAllCarType(){
         return carTypeRepository.findAll();
     }
 
-    public CarType getById (Long id){
-        return carTypeRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFound("Could not find CarType with ID ", id) );
+    public ResponseEntity<String> addCarType(CarType carType){
+        try {
+            carTypeRepository.save(carType);
+            return new ResponseEntity<String>("carType created!", HttpStatus.OK);
+        }
+        catch (Exception e){
+            return new ResponseEntity<String>("carType has not been created!", HttpStatus.BAD_REQUEST);
+        }
     }
 
-    public CarType add (CarType carType){
-        return carTypeRepository.save(carType);
+    public ResponseEntity<?> findById(Long id) {
+        if (carTypeRepository.existsById(id)){
+            return new ResponseEntity<Optional<CarType>>(carTypeRepository.findById(id), HttpStatus.OK);
+        }
+        else {
+            return new ResponseEntity<String>("carType with id "+id+" not found", HttpStatus.BAD_REQUEST);
+        }
     }
 
-    public CarType update (CarType carTypeUpdate,Long id){
+    public ResponseEntity<?> updateCarType(Long id, CarType newCarType){
         return carTypeRepository.findById(id)
                 .map(carType -> {
-                    carType.setCarType(carTypeUpdate.getCarType());
-                    return carTypeRepository.save(carType);
-                })
-                .orElseThrow(() -> new ResourceNotFound("Could not find CarType with ID ", id) );
+                    carType.setCarType(newCarType.getCarType());
+                    carTypeRepository.save(carType);
+                    return new ResponseEntity<String>("carType with id "+id+" updated!",HttpStatus.OK);
+                }).orElse(new ResponseEntity<String>("carType with id "+id+" not found",HttpStatus.NOT_FOUND));
     }
 
-    public void delete(Long id){
-        carTypeRepository.deleteById(id);
+    public ResponseEntity<String> deleteCarType(Long id){
+        try {
+            carTypeRepository.deleteById(id);
+            return new ResponseEntity<String>("carType deleted!", HttpStatus.OK);
+        }
+        catch (Exception e){
+            return new ResponseEntity<String>("carType with id "+id+" not found", HttpStatus.BAD_REQUEST);
+        }
     }
 }

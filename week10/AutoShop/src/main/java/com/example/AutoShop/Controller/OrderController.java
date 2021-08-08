@@ -1,9 +1,6 @@
 package com.example.AutoShop.Controller;
 
 import com.example.AutoShop.Entity.Order;
-import com.example.AutoShop.Exceptions.ResourceNotFound;
-import com.example.AutoShop.Repository.CustomerRepository;
-import com.example.AutoShop.Repository.OrderRepository;
 import com.example.AutoShop.Service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,33 +16,28 @@ public class OrderController {
     private OrderService orderService;
 
     @GetMapping
-    public List<Order> getAll(){
-        return orderService.getAll();
+    public List<Order> findAll(){
+        return orderService.getAllOrder();
     }
 
-    @GetMapping("/customer/{customerId}")
-    public List<Order> getAllOrderCustomers(@PathVariable Long cutomerId){
-        return orderService.getAllOrderCustomers(cutomerId);
+    @PostMapping
+    public ResponseEntity<String> add(@RequestBody Order order){
+        return orderService.addOrder(order);
     }
 
-    @GetMapping("/customer/{customerId}/oder/{orderId}")
-    public Order getOneOrderCustomers(@PathVariable Long customerId, @PathVariable  Long orderId){
-        return orderService.getOneOrderCustomers(customerId,orderId);
+    @GetMapping("/{id}")
+    public ResponseEntity<?> findById(@PathVariable Long id) {
+        return orderService.findById(id);
     }
 
-    @PostMapping("/customer/{customerId}")
-    public Order add(@PathVariable Long customerId, @RequestBody Order order){
-        return orderService.add(customerId,order);
+    @PutMapping("/{id}")
+    public ResponseEntity<?> update(@PathVariable Long id,
+                                    @RequestBody Order order){
+        return orderService.updateOrder(id, order);
     }
 
-    @PutMapping("/customer/{customerId}/order/{orderId}")
-    public Order update (@PathVariable Long customerId,@PathVariable Long orderId, @RequestBody Order order){
-        return orderService.update(order,orderId,customerId);
-    }
-
-
-    @DeleteMapping("/customer/{customerId}/order/{orderId}")
-    public ResponseEntity<?> delete(@PathVariable Long customerId,@PathVariable Long orderID){
-        return orderService.delete(customerId,orderID);
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> delete(@PathVariable Long id){
+        return orderService.deleteOrder(id);
     }
 }

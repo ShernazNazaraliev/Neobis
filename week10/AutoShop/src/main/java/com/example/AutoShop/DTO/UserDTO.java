@@ -1,4 +1,4 @@
-package com.example.AutoShop.Entity;
+package com.example.AutoShop.DTO;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,8 +7,8 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class AuthRequest {
 
+public class UserDTO {
     private String userName;
     private String password;
 }

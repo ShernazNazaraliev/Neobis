@@ -1,55 +1,69 @@
+package com.example.AutoShop.Entity;
 
-        package com.example.AutoShop.Entity;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
-        import lombok.AllArgsConstructor;
-        import lombok.Getter;
-        import lombok.NoArgsConstructor;
-        import lombok.Setter;
-        import org.springframework.security.core.GrantedAuthority;
-        import org.springframework.security.core.userdetails.UserDetails;
+import javax.persistence.*;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
-        import javax.persistence.*;
-        import java.util.Collection;
-        import java.util.HashSet;
-        import java.util.Set;
-
-
-@NoArgsConstructor
+@Data
 @AllArgsConstructor
-@Getter
-@Setter
+@NoArgsConstructor
+
 @Entity
-@Table (name = "User")
+@Table(name = "users")
 public class User implements UserDetails {
+
+
     @Id
-    @SequenceGenerator(name = "User_seq",
-            sequenceName = "User_seq",
-            allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "User_seq")
-    @Column (name = "user_ID")
+    @SequenceGenerator(name = "users_seq", sequenceName = "users_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "users_seq")
+    @Column(name = "user_id")
     private Long id;
 
+    @Column(name = "user_name")
     private String userName;
+
+    @Column(name = "user_password")
     private String password;
 
 
-    @ManyToMany (fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "user_roles",
-            joinColumns = { @JoinColumn(name = "user_ID") },
-            inverseJoinColumns = { @JoinColumn(name = "role_ID") }
+            joinColumns = {
+                    @JoinColumn(name = "user_id")
+            },
+            inverseJoinColumns = {
+                    @JoinColumn(name = "role_id")
+            }
     )
-    @Column (name = "roles")
+    @Column(name = "roles")
     private Set<Role> roles = new HashSet<>();
 
-    public User(String userName,String password) {
+    public User(String userName, String password) {
         this.userName = userName;
         this.password = password;
     }
 
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return getRoles();
+    }
 
-    public void addRoles(Role role) {
-        this.roles.add(role);
+    @Override
+    public String getPassword() {
+        return this.password;
+    }
+
+    @Override
+    public String getUsername() {
+        return this.userName;
     }
 
     @Override
@@ -72,14 +86,5 @@ public class User implements UserDetails {
         return true;
     }
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return getRoles();
-    }
-
-    @Override
-    public String getUsername() {
-        return userName;
-    }
 
 }
