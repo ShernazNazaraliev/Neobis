@@ -1,32 +1,36 @@
 package com.example.AutoShop.Entity;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
-@Getter
-@Setter
-@NoArgsConstructor
+@Data
 @AllArgsConstructor
-@Entity (name = "Car")
-@Table (name = "Cars")
-public class Car {
-    @Id
-    @SequenceGenerator(name = "Customer_seq", sequenceName = "Customer_seq",allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "Customer_seq")
-    @Column (name = "car_Id")
-    private Long CarId;
+@NoArgsConstructor
 
+@Entity
+@Table(name = "cars")
+public class Car {
+
+    @Id
+    @SequenceGenerator(name = "cars_seq", sequenceName = "cars_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "cars_seq")
+    @Column(name = "car_id")
+    private Long id;
+
+    @Column(name = "car_name")
     private String carName;
 
-        private String color;
+    @Column(name = "car_color")
+    private String color;
 
     @ManyToOne
-    @JoinColumn (name = "car_Type_ID", referencedColumnName = "car_Type_ID")
-    private CarType carType;
+    @JoinColumn(name = "car_type_id", referencedColumnName = "car_type_id")
+    private CarType carTypeId;
 
     @ManyToOne
-    @JoinColumn(name = "price_ID",referencedColumnName = "price_ID")
-    private PriceList priceID;
-
+    @JoinColumn(name = "price_id", referencedColumnName = "price_id")
+    private PriceList priceListId;
 }

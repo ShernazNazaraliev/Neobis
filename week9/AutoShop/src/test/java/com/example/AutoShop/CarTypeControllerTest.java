@@ -1,17 +1,16 @@
 package com.example.AutoShop;
 
-import com.example.AutoShop.Entity.Car;
 import com.example.AutoShop.Entity.CarType;
-import com.example.AutoShop.Entity.PriceList;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -19,52 +18,52 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 public class CarTypeControllerTest {
-
     @Autowired
     private MockMvc mockMvc;
 
-    private ObjectMapper objectMapper;
-
-    public CarTypeControllerTest() {
-        objectMapper = new ObjectMapper();
-    }
-
     @Test
-    public void getAllTest() throws Exception {
-        this.mockMvc.perform(get("/carType")).andDo(print())
+    public void getCarTypeTest() throws  Exception{
+        this.mockMvc.perform(get("/carType"))
+                .andDo(print())
                 .andExpect(status().isOk());
     }
-
     @Test
-    public void getById() throws Exception{
-        this.mockMvc.perform(get("/carType/{id}",1)).andDo(print())
-                .andExpect(status().isOk());
-    }
-
-    @Test
-    public void add() throws Exception{
-        CarType carType = new CarType(1L,"sedan");
-        String jsonRequest = objectMapper.writeValueAsString(carType);
-        mockMvc.perform(post("/carType")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(jsonRequest))
+    public void getOneCarTypeTest() throws  Exception{
+        this.mockMvc.perform(get("/carType/1"))
                 .andDo(print())
                 .andExpect(status().isOk());
     }
 
     @Test
-    public void update()throws Exception {
-        CarType carType = new CarType(1L,"cobriolet");
-        String jsonRequest = objectMapper.writeValueAsString(carType);
-        mockMvc.perform(MockMvcRequestBuilders.put("/carType/{id}",2)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(jsonRequest)).andDo(print())
+    public void postCarTypeTest() throws Exception {
+        CarType carType = new CarType();
+        carType.setId(8L);
+        carType.setCarType("Bus");
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.configure(SerializationFeature.WRAP_ROOT_VALUE, false);
+        ObjectWriter ow = mapper.writer().withDefaultPrettyPrinter();
+        String requestJson=ow.writeValueAsString(carType);
+        mockMvc.perform(post("/carType").contentType(APPLICATION_JSON_UTF8)
+                .content(requestJson))
                 .andExpect(status().isOk());
     }
 
     @Test
-    public void deleteById() throws Exception{
-        this.mockMvc.perform(delete("/carType/{id}",1))
+    public void putCarTypeTest() throws  Exception{
+        CarType carType = new CarType();
+        carType.setCarType("Coupe");
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.configure(SerializationFeature.WRAP_ROOT_VALUE, false);
+        ObjectWriter ow = mapper.writer().withDefaultPrettyPrinter();
+        String requestJson=ow.writeValueAsString(carType);
+        mockMvc.perform(put("/carType/8").contentType(APPLICATION_JSON_UTF8)
+                .content(requestJson))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    public void deleteCarTypeTest() throws  Exception{
+        this.mockMvc.perform(delete("/carType/8"))
                 .andDo(print())
                 .andExpect(status().isOk());
     }

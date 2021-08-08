@@ -1,14 +1,14 @@
 package com.example.AutoShop.Service;
 
-import com.example.AutoShop.Entity.Car;
 import com.example.AutoShop.Entity.Customer;
-import com.example.AutoShop.Exceptions.ResourceNotFound;
-import com.example.AutoShop.Repository.CarRepository;
 import com.example.AutoShop.Repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CustomerService {
@@ -20,32 +20,49 @@ public class CustomerService {
         this.customerRepository = customerRepository;
     }
 
-    public List<Customer> getAll (){
+    public List<Customer> getAllCustomer(){
         return customerRepository.findAll();
     }
 
-    public Customer getById (Long id){
-        return customerRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFound("Could not find customer with ID ", id) );
+    public ResponseEntity<String> addCustomer(Customer customer){
+        try {
+            customerRepository.save(customer);
+            return new ResponseEntity<String>("customer created!", HttpStatus.OK);
+        }
+        catch (Exception e){
+            return new ResponseEntity<String>("customer has not been created!", HttpStatus.BAD_REQUEST);
+        }
     }
 
-    public Customer add (Customer customer){
-        return customerRepository.save(customer);
+    public ResponseEntity<?> findById(Long id) {
+        if (customerRepository.existsById(id)){
+            return new ResponseEntity<Optional<Customer>>(customerRepository.findById(id), HttpStatus.OK);
+        }
+        else {
+            return new ResponseEntity<String>("customer with id "+id+" not found", HttpStatus.BAD_REQUEST);
+        }
     }
 
-    public Customer update (Customer customerUpdate,Long id){
+    public ResponseEntity<?> updateCustomer(Long id, Customer newCustomer){
         return customerRepository.findById(id)
                 .map(customer -> {
-                    customer.setCustomersName(customerUpdate.getCustomersName());
-                    customer.setAdress(customerUpdate.getAdress());
-                    customer.setEmail(customerUpdate.getEmail());
-                    customer.setPhoneNumber(customerUpdate.getPhoneNumber());
-                    return customerRepository.save(customer);
-                })
-                .orElseThrow(() -> new ResourceNotFound("Could not find customer with ID ", id) );
+                    customer.setCustomerName(newCustomer.getCustomerName());
+                    customer.setAddress(newCustomer.getAddress());
+                    customer.setEmail(newCustomer.getEmail());
+                    customer.setPhoneNumber(newCustomer.getPhoneNumber());
+                    customerRepository.save(customer);
+                    return new ResponseEntity<String>("customer with id "+id+" updated!",HttpStatus.OK);
+                }).orElse(new ResponseEntity<String>("customer with id "+id+" not found",HttpStatus.NOT_FOUND));
     }
 
-    public void delete(Long id){
-        customerRepository.deleteById(id);
+    public ResponseEntity<String> deleteCustomer(Long id){
+        try {
+            customerRepository.deleteById(id);
+            return new ResponseEntity<String>("customer deleted!", HttpStatus.OK);
+        }
+        catch (Exception e){
+            return new ResponseEntity<String>("customer with id "+id+" not found", HttpStatus.BAD_REQUEST);
+        }
+
     }
 }

@@ -1,25 +1,26 @@
 package com.example.AutoShop.Entity;
 
+
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import javax.persistence.*;
 
-@Getter
-@Setter
-@NoArgsConstructor
+@Data
 @AllArgsConstructor
-@Entity (name = "CarType")
-@Table (name = "Car_Type")
+@NoArgsConstructor
+
+@Entity
+@Table(name = "car_type")
 public class CarType {
 
     @Id
-    @SequenceGenerator(name = "CarType_seq",sequenceName = "CarType_seq",allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "CarType_seq")
-    @Column(name = "car_Type_ID")
-    private Long typeID;
+    @SequenceGenerator(name = "car_type_seq", sequenceName = "car_type_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "car_type_seq")
+    @Column(name = "car_type_id")
+    private Long id;
 
+    @Column(name = "car_type")
     private String carType;
 }

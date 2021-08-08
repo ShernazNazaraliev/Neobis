@@ -1,16 +1,16 @@
 package com.example.AutoShop;
 
-import com.example.AutoShop.Entity.CarType;
 import com.example.AutoShop.Entity.Customer;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -18,52 +18,59 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 public class CustomerControllerTest {
-
     @Autowired
     private MockMvc mockMvc;
 
-    private ObjectMapper objectMapper;
-
-    public CustomerControllerTest() {
-        objectMapper = new ObjectMapper();
-    }
-
     @Test
-    public void getAllTest() throws Exception {
-        this.mockMvc.perform(get("/customer")).andDo(print())
+    public void getCustomersTest() throws  Exception{
+        this.mockMvc.perform(get("/customers"))
+                .andDo(print())
                 .andExpect(status().isOk());
     }
-
     @Test
-    public void getById() throws Exception{
-        this.mockMvc.perform(get("/customer/{id}",1)).andDo(print())
-                .andExpect(status().isOk());
-    }
-
-    @Test
-    public void add() throws Exception{
-        Customer customer = new Customer(1L,"second","second@gmail.com","Bishkek","+996704545454");
-        String jsonRequest = objectMapper.writeValueAsString(customer);
-        mockMvc.perform(post("/customer")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(jsonRequest))
+    public void getOneCustomerTest() throws  Exception{
+        this.mockMvc.perform(get("/customers/1"))
                 .andDo(print())
                 .andExpect(status().isOk());
     }
 
     @Test
-    public void update()throws Exception {
-        Customer customer = new Customer(1L,"first","first@gmail.com","Moscow","+996704545454");
-        String jsonRequest = objectMapper.writeValueAsString(customer);
-        mockMvc.perform(MockMvcRequestBuilders.put("/customer/{id}",1)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(jsonRequest)).andDo(print())
+    public void postCustomerTest() throws Exception {
+        Customer customer = new Customer();
+        customer.setId(1L);
+        customer.setCustomerName("Shernaz");
+        customer.setAddress("Bishkek");
+        customer.setEmail("shernaz@gmail.com");
+        customer.setPhoneNumber("0700700700");
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.configure(SerializationFeature.WRAP_ROOT_VALUE, false);
+        ObjectWriter ow = mapper.writer().withDefaultPrettyPrinter();
+        String requestJson=ow.writeValueAsString(customer);
+        mockMvc.perform(post("/customers").contentType(APPLICATION_JSON_UTF8)
+                .content(requestJson))
                 .andExpect(status().isOk());
     }
 
     @Test
-    public void deleteById() throws Exception{
-        this.mockMvc.perform(delete("/customer/{id}",1))
+    public void putCustomerTest() throws  Exception{
+        Customer customer = new Customer();
+        customer.setId(1L);
+        customer.setCustomerName("Nazaraliev");
+        customer.setAddress("Talas");
+        customer.setEmail("Nazaraliev@gmail.com");
+        customer.setPhoneNumber("0123456789");
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.configure(SerializationFeature.WRAP_ROOT_VALUE, false);
+        ObjectWriter ow = mapper.writer().withDefaultPrettyPrinter();
+        String requestJson=ow.writeValueAsString(customer);
+        mockMvc.perform(put("/customers/1").contentType(APPLICATION_JSON_UTF8)
+                .content(requestJson))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    public void deleteCustomerTest() throws  Exception{
+        this.mockMvc.perform(delete("/customers/1"))
                 .andDo(print())
                 .andExpect(status().isOk());
     }
