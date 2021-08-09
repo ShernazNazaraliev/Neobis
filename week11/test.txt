@@ -1,5 +1,5 @@
 1. Add Customer
-2. POST localhost:9090/customer
+2. POST localhost:8080/customers
 3.   "customersName": "First",
      "email": "first@gmail.com",
      "adress": "Bishkek",
@@ -8,7 +8,7 @@
 
 --------------------------------------
 1. Get all of customerы
-2. GET localhost:9090/customer
+2. GET localhost:8080/customers
 3. 
 [
     {
@@ -22,7 +22,7 @@
 4 (200 OK)
 ---------------------------------------
 1. Get just one customer
-2. GET localhost:9090/customer/1
+2. GET localhost:8080/customers/1
 3. 
 {
     "customerID": 1,
@@ -34,7 +34,7 @@
 4. (200 OK)
 ---------------------------------------
 1. Update customer
-2. PUT localhost:9090/customer/1
+2. PUT localhost:8080/customers/1
 3. 
 {
     "customerID": 2,
@@ -54,5 +54,5 @@
 5. (200 OK)
 ---------------------------------------
 1. Deletet customer
-2. DELETE localhost:9090/customer/1
+2. DELETE localhost:8080/customers/1
 3. 1 (200 OK)
