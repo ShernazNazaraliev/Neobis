@@ -33,6 +33,10 @@ public class RegistrationController {
 
     @PostMapping
     public String registrationUser(@ModelAttribute("userForm")UserDTO userDTO){
+
+        if (!userService.save(userDTO)){
+            return "redirect:/registration?error";
+        }
         userService.save(userDTO);
         return "redirect:/registration?success";
     }

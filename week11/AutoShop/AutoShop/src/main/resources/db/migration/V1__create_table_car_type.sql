@@ -10,4 +10,4 @@ create table car_type_seq
     next_val bigint
 );
 
-insert into car_type_seq values (1);
+insert into car_type_seq values (8);

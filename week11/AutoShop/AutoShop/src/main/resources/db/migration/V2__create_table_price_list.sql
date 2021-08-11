@@ -10,4 +10,4 @@ create table price_list_seq
     next_val bigint
 );
 
-insert into price_list_seq values (1);
+insert into price_list_seq values (6);

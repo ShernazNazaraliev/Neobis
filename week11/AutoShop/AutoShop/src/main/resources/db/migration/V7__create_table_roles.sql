@@ -10,4 +10,4 @@ create table roles_seq
     next_val bigint
 );
 
-insert into roles_seq values(1);
+insert into roles_seq values(3);

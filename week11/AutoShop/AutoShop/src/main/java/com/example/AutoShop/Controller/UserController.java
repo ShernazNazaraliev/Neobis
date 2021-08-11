@@ -17,11 +17,6 @@ public class UserController {
     @Autowired
     private AuthenticationManager authenticationManager;
 
-    @GetMapping("/admin")
-    public String helloAdmin(){
-        return "<h1>Hello Admin!</h1>";
-    }
-
     @GetMapping("/login")
     public String login(){
         return "login";
@@ -35,7 +30,7 @@ public class UserController {
                     new UsernamePasswordAuthenticationToken(authorizationJwtUser.getUserName(), authorizationJwtUser.getPassword())
             );
         } catch (Exception ex) {
-            throw new Exception("invalid username/password");
+            throw new Exception("invalid username or password");
         }
         return jwtUtil.generateToken(authorizationJwtUser.getUserName());
     }

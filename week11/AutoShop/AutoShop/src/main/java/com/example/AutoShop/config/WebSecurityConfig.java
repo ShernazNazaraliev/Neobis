@@ -75,4 +75,44 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
         }
     }
+
+    @Order(2)
+    @Configuration
+    public class WebSecurityAdapter extends WebSecurityConfigurerAdapter {
+
+
+        @Override
+        protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+            auth.authenticationProvider(authenticationProvider());
+            auth.userDetailsService(userServiceImplements);
+        }
+
+        @Override
+        protected void configure(HttpSecurity http) throws Exception {
+            http
+                    .httpBasic().disable()
+                    .csrf().disable()
+                    .authorizeRequests()
+                    .antMatchers("/admin").hasRole("ADMIN")
+                    .antMatchers("/").permitAll()
+                    .antMatchers("/login").permitAll()
+                    .antMatchers("/").permitAll()
+                    .antMatchers("/registration").permitAll()
+                    .anyRequest().authenticated()
+                    .and()
+                    .formLogin()
+                    .loginPage("/login")
+                    .permitAll()
+                    .defaultSuccessUrl("/")
+                    .permitAll()
+                    .and()
+                    .logout()
+                    .invalidateHttpSession(true)
+                    .clearAuthentication(true)
+                    .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                    .logoutSuccessUrl("/login?logout")
+                    .permitAll();
+        }
+    }
+
 }

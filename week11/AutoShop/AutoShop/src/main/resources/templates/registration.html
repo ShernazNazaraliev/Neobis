@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Registration</title>
+</head>
+<body>
+
+  <nav>
+        <a  th:href="@{/registration}">Registration</a>
+        <a  th:href="@{/login}">Sign in</a>
+  </nav>
+
+  <br>
+  <br>
+
+  <div th:if="${param.success}">
+    <div class="alert alert-info">you registered!</div>
+  </div>
+
+  <div th:if="${param.error}">
+    <div class="alert alert-danger">a user with the same name already exists</div>
+  </div>
+
+
+<h1>Registration</h1>
+
+  <form th:action="@{/registration}" method="post" th:object="${userForm}">
+
+    <label for="userName"> Username </label>
+    <input id="userName"  th:field="*{userName}" required autofocus="autofocus" minlength="4" maxlength="256" />
+
+    <label  for="password"> Password </label>
+    <input id="password" type="password" th:field="*{password}" required autofocus="autofocus" minlength="4" />
+    <br>
+
+    <button type="submit" >Register</button>
+    <br>
+    <span>Already registered? <a href="/" th:href="@{/login}">Login here</a></span>
+
+  </form>
+</body>
+</html>
