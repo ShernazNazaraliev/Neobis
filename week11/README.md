@@ -1,10 +1,10 @@
 <h2>Dockerfile</h2>
 
 1. download the image for mysql:
-	```docker pull mysql:8.0```
+	```docker pull postgres```
 
 2. run the MySQL server
-	```docker run --name mysql-autoshop -e MYSQL_DATABASE=auto_project -e MYSQL_ROOT_PASSWORD=password -e MYSQL_PASSWORD=password -d mysql:8.0```
+	```docker run --name postgres-autoshop -e POSTGRES_DB=auto_project -e POSTGRES_PASSWORD=password -p 5432:5432 -d postgres```
 
 3. create JAR file 
 	```mvn clean package```
@@ -13,7 +13,7 @@
 	```docker build -t autoshop .```
 
 5. run container
-	```docker run -d -p 8080:8080 --name autoshop --link mysql-autoshop autoshop ```
+	```docker run -d -p 8080:8080 --name autoshop --link postgres-autoshop autoshop```
 
 
 <h2>docker-compose</h2>

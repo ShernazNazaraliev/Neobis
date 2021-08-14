@@ -1,13 +1,9 @@
 create table roles
 (
     role_id bigint not null
-        primary key,
-    role varchar(255) null
+        constraint roles_pkey
+            primary key,
+    role    varchar(255)
 );
 
-create table roles_seq
-(
-    next_val bigint
-);
-
-insert into roles_seq values(3);
+create sequence roles_seq START 1;

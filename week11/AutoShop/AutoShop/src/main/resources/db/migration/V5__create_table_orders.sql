@@ -1,22 +1,17 @@
 create table orders
 (
-    order_id bigint not null
-        primary key,
-    date_of_creation datetime null,
-    status varchar(255) null,
-    car_id bigint null,
-    customer_id bigint null
+    order_id         bigint not null
+        constraint orders_pkey
+            primary key,
+    date_of_creation timestamp,
+    status           varchar(255),
+    car_id           bigint
+        constraint fkd2p23ixwrrt395glgi9nnbj23
+            references cars,
+    customer_id      bigint
+        constraint fkpxtb8awmi0dk6smoh2vp1litg
+            references customers
 );
 
-create index FKd2p23ixwrrt395glgi9nnbj23
-	on orders (car_id);
 
-create index FKpxtb8awmi0dk6smoh2vp1litg
-	on orders (customer_id);
-
-create table orders_seq
-(
-    next_val bigint
-);
-
-insert into orders_seq values(1);
+create sequence orders_seq START 1;

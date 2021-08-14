@@ -22,7 +22,6 @@ public class JWTFilter extends OncePerRequestFilter {
     @Autowired
     private UserServiceImplements service;
 
-
     @Override
     protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws ServletException, IOException {
 

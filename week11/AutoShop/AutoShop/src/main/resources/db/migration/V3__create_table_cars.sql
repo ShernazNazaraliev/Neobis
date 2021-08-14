@@ -1,23 +1,16 @@
 create table cars
 (
-    car_id bigint not null
-        primary key,
-    car_name varchar(255) null,
-    car_color varchar(255) null,
-    car_type_id bigint null,
-    price_id bigint null
+    car_id      bigint not null
+        constraint cars_pkey
+            primary key,
+    car_name    varchar(255),
+    car_color   varchar(255),
+    car_type_id bigint
+        constraint fkcki51tfk2udss8oujqvpu1mpj
+            references car_type,
+    price_id    bigint
+        constraint fk1itgarrpxn99j57gfqhlotuel
+            references price_list
 );
 
-create index FK1itgarrpxn99j57gfqhlotuel
-	on cars (price_id);
-
-create index FKcki51tfk2udss8oujqvpu1mpj
-	on cars (car_type_id);
-
-create table cars_seq
-(
-    next_val bigint
-);
-
-insert into cars_seq values (1);
-
+create sequence cars_seq START 1;
