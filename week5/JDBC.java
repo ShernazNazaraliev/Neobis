@@ -11,7 +11,7 @@ public class JDBC {
     private static PreparedStatement statement = null;
     private static String url ="jdbc:mysql://localhost:3306/AutoShop";
     private static  String username = "root";
-    private static String password ="AidarkanMoldokulov5";
+    private static String password ="password";
     private static int rows;
 
     public static void main(String[] args) throws SQLException {
